@@ -7,9 +7,9 @@
 	<div class="row">
 		<div class="col-12 col-md-12 mx-auto p-1 rounded mt-5">
 			<div class="rounded-top p-2 text-dark">
-				<h3>Roles</h3>
+				<h3>Categories</h3>
 			</div>
-			@if(count($roles)>0)
+			@if(count($categories)>0)
 			<div class="container table-responsive border border-dark p-0">
 				<table class="table table-bordered table-striped table-hover m-0">
 					<thead class="bg-dark text-white">
@@ -24,16 +24,16 @@
 						</th>
 					</thead>
 					<tbody>
-					@foreach($roles as $role)
-						<tr data-toggle="modal" data-target="#modalEditRole{{ $role->id }}">
+					@foreach($categories as $category)
+						<tr data-toggle="modal" data-target="#modalEditCategory{{ $category->id }}">
 							<td>
-								{{ $role->name }}
+								{{ $category->name }}
 							</td>
 							<td>
-								{{ $role->description }}
+								{{ $category->description }}
 							</td>
 							<td>
-								{{ $role->created_at }}
+								{{ $category->created_at }}
 							</td>
 						</tr>
 					@endforeach
@@ -43,10 +43,10 @@
 				</table>
 			</div>
 			@else
-				<h3>No roles yet.</h3>
+				<h3>No Categories yet.</h3>
 			@endif
 				
-				<button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddRole">Add Role</button>
+				<button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddCategory">Add Category</button>
 			
 			  </div>
 			</div>
@@ -55,22 +55,22 @@
 		</div>
 
 
-		<!-- Modal ADD ROLE -->
-		<div class="modal fade" id="modalAddRole" tabindex="-1" role="dialog" aria-hidden="true">
+		<!-- Modal ADD Category -->
+		<div class="modal fade" id="modalAddCategory" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title">Add Role</h5>
+		        <h5 class="modal-title">Add Category</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-				<form action="{{ route('roles.store') }}" method="post" class="text-center rounded m-0">
+				<form action="{{ route('categories.store') }}" method="post" class="text-center rounded m-0">
 			      <div class="modal-body">
 					@csrf
 					<div class="form-group p-3 m-0">
-						<label for="name" class="mt-3 mb-0">Role Name</label>
-						<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="" required>
+						<label for="name" class="mt-3 mb-0">Category Name</label>
+						<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Category Name" value="" required>
 
 						<label for="name" class="mt-3 mb-0">Description</label>
 						<input type="text" name="description" id="description"  class="form-control mb-0 text-center" placeholder="Enter Description" value="">
@@ -86,27 +86,27 @@
 		  </div>
 		</div>
 
-		<!-- Modal EDIT ROLE -->
-		@foreach($roles as $role)
-			<div class="modal fade" id="modalEditRole{{ $role->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+		<!-- Modal EDIT Category -->
+		@foreach($categories as $category)
+			<div class="modal fade" id="modalEditCategory{{ $category->id }}" tabindex="-1" role="dialog" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title">Edit Role</h5>
+			        <h5 class="modal-title">Edit Category</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-					<form action="{{ route("roles.update",['role'=> $role->id]) }}" method="post"  enctype="multipart/form-data" class="text-center rounded m-0">
+					<form action="{{ route("categories.update",['category'=> $category->id]) }}" method="post"  enctype="multipart/form-data" class="text-center rounded m-0">
 				      	@method('PUT')
 						@csrf
 						<div class="form-group p-3 m-0">
-							<label for="name" class="mt-3 mb-0">Role Name</label>
-							<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="{{ $role->name }}" <?php echo ( $role->name == "admin" || $role->name == "user") ? "disabled" : "required"; ?>>
+							<label for="name" class="mt-3 mb-0">Category Name</label>
+							<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Category Name" value="{{ $category->name }}" <?php echo ( $category->name == "admin" || $category->name == "user") ? "disabled" : "required"; ?>>
 
 							<label for="name" class="mt-3 mb-0">Description</label>
-							<input type="text" name="description" id="description"  class="form-control mb-0 text-center" placeholder="Enter Description" value="{{ $role->description }}">
+							<input type="text" name="description" id="description"  class="form-control mb-0 text-center" placeholder="Enter Description" value="{{ $category->description }}">
 
 						</div>	
 				      {{-- </div> --}}
@@ -115,10 +115,10 @@
 				        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Cancel</button>
 
 					</form>
-					<form action="{{ route("roles.destroy",['role'=> $role->id]) }}" method="post"  enctype="multipart/form-data" class="text-center rounded m-0">
+					<form action="{{ route("categories.destroy",['category'=> $category->id]) }}" method="post"  enctype="multipart/form-data" class="text-center rounded m-0">
 				      	@method('DELETE')
 						@csrf
-				        <button type="submit" class="btn btn-outline-dark float-left <?php echo ( $role->name == "admin" || $role->name == "user") ? "d-none" : ""; ?>">Delete</button>
+				        <button type="submit" class="btn btn-outline-dark float-left <?php echo ( $category->name == "admin" || $category->name == "user") ? "d-none" : ""; ?>">Delete</button>
 				    </form>
 			      </div>
 			    </div>
