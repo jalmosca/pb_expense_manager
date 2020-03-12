@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -16,7 +17,8 @@ class ExpenseController extends Controller
     {
         // $this->authorize('viewAny',$expense);
         $expenses = Expense::all();
-        return view('expenses.index')->with('expenses',$expenses);
+        $categories = Category::all();
+        return view('expenses.index')->with('expenses',$expenses)->with('categories',$categories);
     }
 
     /**

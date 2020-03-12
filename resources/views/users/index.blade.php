@@ -36,7 +36,13 @@
 								{{ $user->email }}
 							</td>
 							<td>
-								{{ $user->role_id }}
+								@foreach($roles as $role)
+									<?php 
+										if($role->id == $user->role_id){
+											echo $role->name;
+										}
+									?>
+								@endforeach
 							</td>
 							<td>
 								{{ $user->created_at }}
@@ -81,8 +87,14 @@
 						<label for="name" class="mt-3 mb-0">Email Address</label>
 						<input type="email" name="email" id="email"  class="form-control mb-0 text-center" placeholder="Enter Email Address" value="" required>
 
-						<label for="name" class="mt-3 mb-0">Role Id</label>
-						<input type="text" name="role" id="role"  class="form-control mb-0 text-center" placeholder="Enter Role" value="" required>
+						<label for="name" class="mt-3 mb-0">Role</label>
+
+						<select name="role" id="role" class="form-control" required>
+									<option value="" selected disabled>Select Role</option>
+								@foreach($roles as $role)
+									<option value="{{ $role->id }}">{{ $role->name }}</option>
+								@endforeach
+						</select>
 
 					</div>	
 			      </div>
@@ -117,8 +129,12 @@
 							<label for="name" class="mt-3 mb-0">Email Address</label>
 							<input type="email" name="email" id="email"  class="form-control mb-0 text-center" placeholder="Enter Email Address" value="{{ $user->email }}" required>
 
-							<label for="name" class="mt-3 mb-0">Role Id</label>
-							<input type="text" name="role" id="role"  class="form-control mb-0 text-center" placeholder="Enter Role" value="{{ $user->role_id }}" required>
+							<label for="role" class="mt-3 mb-0">Role</label>
+							<select name="role" id="role" class="form-control" required>
+									@foreach($roles as $role)
+										<option value="{{ $role->id }}" <?php echo ($role->id == $user->role_id) ? "selected" : "" ?>>{{ $role->name }}</option>
+									@endforeach
+							</select>
 
 						</div>	
 				      {{-- </div> --}}

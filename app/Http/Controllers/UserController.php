@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -11,7 +13,8 @@ class UserController extends Controller
     {
         // $this->authorize('viewAny',$user);
         $users = User::all();
-        return view('users.index')->with('users',$users);
+        $roles = Role::all();
+        return view('users.index')->with('users',$users)->with('roles',$roles);
     }
 
     /**
@@ -46,9 +49,9 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->role_id = $request->input('role');
         if($request->input('role')==1){
-	        $user->password = "admin1234";
+	        $user->password = Hash::make('admin1234');
         } else {
-	        $user->password = "12345678";
+	        $user->password = Hash::make('12345678');
         }
         $user->save();
         return redirect( route('users.index'));

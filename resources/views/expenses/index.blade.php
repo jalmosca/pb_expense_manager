@@ -30,7 +30,13 @@
                     @foreach($expenses as $expense)
                         <tr data-toggle="modal" data-target="#modalEditExpense{{ $expense->id }}">
                             <td>
-                                {{ $expense->category_id }}
+                                @foreach($categories as $category)
+                                    <?php 
+                                        if($category->id == $expense->category_id){
+                                            echo $category->name;
+                                        }
+                                    ?>
+                                @endforeach
                             </td>
                             <td>
                                 {{ $expense->amount }}
@@ -57,7 +63,6 @@
               </div>
             </div>
 
-
         </div>
 
 
@@ -76,7 +81,13 @@
                     @csrf
                     <div class="form-group p-3 m-0">
                         <label for="category" class="mt-3 mb-0">Expense Category</label>
-                        <input type="text" name="category" id="category"  class="form-control mb-0 text-center" placeholder="Enter Expense Category" value="" required>
+
+                        <select name="category" id="category" class="form-control" required>
+                                <option value="" selected disabled>Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
 
                         <label for="amount" class="mt-3 mb-0">Amount</label>
                         <input type="number" name="amount" id="amount"  class="form-control mb-0 text-center" placeholder="Enter Amount" value="">
@@ -114,7 +125,11 @@
                         <div class="form-group p-3 m-0">
                             
                             <label for="category" class="mt-3 mb-0">Expense Category</label>
-                            <input type="text" name="category" id="category"  class="form-control mb-0 text-center" placeholder="Enter Expense Category" value="{{ $expense->category_id }}" required>
+                            <select name="category" id="category" class="form-control" required>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" <?php echo ($category->id == $expense->category_id) ? "selected" : "" ?>>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
 
                             <label for="amount" class="mt-3 mb-0">Amount</label>
                             <input type="number" name="amount" id="amount"  class="form-control mb-0 text-center" placeholder="Enter Amount" value="{{ $expense->amount }}">

@@ -12,5 +12,9 @@ class CategorySeeder extends Seeder
     public function run()
     {
         //
+        DB::table('categories')->insert([
+            'name' => 'uncategorized',
+            'description' => 'uncategorized expenses'
+        ]);
     }
 }
