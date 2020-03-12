@@ -43,7 +43,7 @@
 				</table>
 			</div>
 			@else
-				<h3>No roles yet.</h3>
+				<h5>No roles yet.</h5>
 			@endif
 				
 				<button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddRole">Add Role</button>

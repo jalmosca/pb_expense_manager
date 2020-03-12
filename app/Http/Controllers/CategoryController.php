@@ -12,9 +12,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
-        // $this->authorize('viewAny',$category);
+        $this->authorize('viewAny',$category);
         $categories = Category::all();
         return view('categories.index')->with('categories',$categories);
     }

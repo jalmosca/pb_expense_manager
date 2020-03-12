@@ -25,7 +25,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/mycss.css') }}" rel="stylesheet">
+    <style>
+        .sidelink {
+            color:inherit;
+            text-decoration: none;
+        }
+    </style>
 
 </head>
 <body class="">
@@ -33,9 +38,33 @@
             <div class="row">
                 <div class="col-2 bg-dark text-white h-100 pt-5" style="min-height: 100vh; height: 100%; position: fixed">
                     @guest
-
+                        
                     @else
-                    <h3 class="text-center">{{ Auth::user()->name }}</h3>
+                        <h3 class="text-center">{{ Auth::user()->name }}</h3>
+
+                        <?php if( Auth::user()->role_id == 1) {?>
+                        <h4 class="mt-5"><a class="sidelink" href="{{ route('home') }}">Dashboard</a></h4>
+                        <h4 class="mt-5">User Management</h4>
+                        <ul style="list-style-type:none">
+                            <li>
+                                <h5><a class="sidelink" href="{{ route('roles.index') }}">Roles</a></h5>
+                            </li>
+                            <li>
+                                <h5><a class="sidelink" href="{{ route('users.index') }}">Users</a></h5>
+                            </li>
+                        </ul>
+                        <?php } ?>
+                        <h4 class="mt-5">Expense Management</h4>
+                        <ul style="list-style-type:none">
+                            <?php if( Auth::user()->role_id == 1) {?>
+                                <li>
+                                    <h5><a class="sidelink" href="{{ route('categories.index') }}">Expense Categories</a></h5>
+                                </li>
+                            <?php } ?>
+                            <li>
+                                <h5><a class="sidelink" href="{{ route('expenses.index') }}">Expenses</a></h5>
+                            </li>
+                        </ul>
                     @endguest
 
                 </div>
@@ -61,17 +90,26 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                             </li>
-                                            @if (Route::has('register'))
+                                            {{-- @if (Route::has('register'))
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                                 </li>
-                                            @endif
+                                            @endif --}}
                                         @else
+
+                                            <li class="nav-item">
+                                                <h5 class="navbar-brand">{{ Auth::user()->name }}</h5>
+                                            </li>
+                                            <li class="nav-item">
+                                                    <a class="nav-link" href="{{ route('users.edit',['user'=> Auth::user()->id]) }}">
+                                                        Change Password
+                                                    </a>
+                                            </li>
                                             <li class="nav-item">
                                                     <a class="nav-link" href="{{ route('logout') }}"
                                                        onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();">
-                                                        {{ __('Logout') }} {{ Auth::user()->name }}
+                                                        {{ __('Logout') }} 
                                                     </a>
 
                                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

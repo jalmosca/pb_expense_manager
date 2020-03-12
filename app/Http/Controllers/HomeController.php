@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Expense;
+use App\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $expenses = Expense::all();
+        $categories = Category::all();
+
+        foreach ($categories as $category) {
+
+            foreach ($expenses as $expense) {
+                if($category->id == $expense->category_id)
+                    $category->total += $expense->amount;
+                }
+            }
+
+        return view('home')->with('expenses',$expenses)->with('categories',$categories);
     }
 }

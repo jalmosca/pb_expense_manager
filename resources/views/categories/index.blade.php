@@ -43,7 +43,7 @@
 				</table>
 			</div>
 			@else
-				<h3>No Categories yet.</h3>
+				<h5>No Categories yet.</h5>
 			@endif
 				
 				<button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddCategory">Add Category</button>

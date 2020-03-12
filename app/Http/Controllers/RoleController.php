@@ -12,9 +12,9 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Role $role)
     {
-        // $this->authorize('viewAny',$role);
+        $this->authorize('viewAny',$role);
         $roles = Role::all();
         return view('roles.index')->with('roles',$roles);
     }

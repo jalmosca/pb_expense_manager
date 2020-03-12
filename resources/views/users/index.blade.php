@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-12 col-md-12 mx-auto p-1 rounded mt-5">
 			<div class="rounded-top p-2 text-dark">
-				<h3>users</h3>
+				<h3>Users</h3>
 			</div>
 			@if(count($users)>0)
 			<div class="container table-responsive border border-dark p-0">
@@ -55,7 +55,7 @@
 				</table>
 			</div>
 			@else
-				<h3>No users yet.</h3>
+				<h5>No Users yet.</h5>
 			@endif
 				
 				<button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddUser">Add User</button>
@@ -95,7 +95,13 @@
 									<option value="{{ $role->id }}">{{ $role->name }}</option>
 								@endforeach
 						</select>
-
+						<div class="alert alert-warning mt-5">
+							Remind new users to change initial password. <br/>
+							default initial password: <br/>
+							for new admin account : admin1234 <br/>
+							for new non-admin account : 12345678
+						</div>
+					
 					</div>	
 			      </div>
 			      <div class="modal-footer">

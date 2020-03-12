@@ -19,7 +19,7 @@ class CreateExpensesTable extends Migration
             $table->date('entrydate');
             $table->timestamps();
             
-            $table->unsignedBigInteger('category_id')->nullable()->default(2);
+            $table->unsignedBigInteger('category_id')->nullable()->default(1);
             $table->foreign('category_id')
                 ->references('id')->on('categories')
                 ->onDelete('set null')

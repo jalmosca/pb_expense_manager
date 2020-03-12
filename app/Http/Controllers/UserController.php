@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-        public function index()
+        public function index(User $user)
     {
-        // $this->authorize('viewAny',$user);
+        $this->authorize('viewAny',$user);
         $users = User::all();
         $roles = Role::all();
         return view('users.index')->with('users',$users)->with('roles',$roles);
@@ -77,6 +77,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+        return view('users.edit')->with('user', $user);
     }
 
     /**
@@ -88,22 +89,37 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-    	$request->validate([
-            'name' => 'string|required|max:50',
-            'email' => 'string|required|max:50|unique:users,email',
-            'role' => 'string|required'
-        ]);
-
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->role_id = $request->input('role');
-        if($request->input('role')==1){
-	        $user->password = "admin1234";
+        if($request->input('password')){
+            if($request->input('password')==$request->input('cpassword')){
+                $user->password = Hash::make($request->input('password'));
+                $user->save();
+                return redirect('home');
+            }
         } else {
-	        $user->password = "12345678";
-        }
-        $user->save();
-        return redirect( route('users.index'));
+            if($user->role_id != 1){
+                if($user->name != $request->input('name')){
+                    $request->validate([
+                    'name' => 'string|required|max:50'
+                    ]);
+                }
+                if($user->email != $request->input('email')){
+                    $request->validate([
+                    'email' => 'string|required|max:50|unique:users,email'
+                    ]);
+                }
+                if($user->role_id != $request->input('role')){
+                    $request->validate([
+                    'role' => 'string|required'
+                    ]);
+                }
+
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->role_id = $request->input('role');
+                $user->save();
+                return redirect( route('users.index'));
+            }
+        }        
     }
 
     /**

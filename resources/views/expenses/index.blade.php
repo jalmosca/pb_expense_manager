@@ -55,7 +55,7 @@
                 </table>
             </div>
             @else
-                <h3>No Expenses yet.</h3>
+                <h5>No Expenses yet.</h5>
             @endif
                 
                 <button class="btn btn-outline-dark mt-4 float-right" data-toggle="modal" data-target="#modalAddExpense">Add Expense</button>
