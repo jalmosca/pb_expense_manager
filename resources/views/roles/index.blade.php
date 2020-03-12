@@ -70,7 +70,7 @@
 					@csrf
 					<div class="form-group p-3 m-0">
 						<label for="name" class="mt-3 mb-0">Role Name</label>
-						<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="">
+						<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="" required>
 
 						<label for="name" class="mt-3 mb-0">Description</label>
 						<input type="text" name="description" id="description"  class="form-control mb-0 text-center" placeholder="Enter Description" value="">
@@ -103,7 +103,7 @@
 						@csrf
 						<div class="form-group p-3 m-0">
 							<label for="name" class="mt-3 mb-0">Role Name</label>
-							<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="{{ $role->name }}" <?php echo ( $role->name == "admin" || $role->name == "user") ? "disabled" : ""; ?>>
+							<input type="text" name="name" id="name"  class="form-control mb-0 text-center" placeholder="Enter Role Name" value="{{ $role->name }}" <?php echo ( $role->name == "admin" || $role->name == "user") ? "disabled" : "required"; ?>>
 
 							<label for="name" class="mt-3 mb-0">Description</label>
 							<input type="text" name="description" id="description"  class="form-control mb-0 text-center" placeholder="Enter Description" value="{{ $role->description }}">
